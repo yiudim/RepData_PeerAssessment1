@@ -1,5 +1,3 @@
-PA1_template <- function() {
-
 	## load necessary libraries
 	require(dplyr)
 	require(ggplot2)
@@ -132,6 +130,3 @@ PA1_template <- function() {
 	## 915
 
 	dev.off()
-	
-}
-	
