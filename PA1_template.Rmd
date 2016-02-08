@@ -23,7 +23,7 @@ PA1_template <- function() {
 		summarise(total_steps = sum(steps))
 
 	## show total steps per day in a histogram
-	png(filename="./plot1.png", width=480, height=480)
+	png(filename="./instructions_fig/plot1.png", width=480, height=480)
 	hist(pa1$total_steps, xlab="Total Steps per Day", col="green", breaks=30)
 	dev.off()
 
@@ -32,6 +32,8 @@ PA1_template <- function() {
 	## mean is 10766.19
 	median(pa1$total_steps,na.rm=TRUE)
 	## median is 10765
+
+	![Total Steps per Day](instructions_fig/plot1.png) 
 	
 
 	## -------- WHAT IS THE DAILY AVERAGE ACTIVITY PATTERN? -----------
@@ -41,11 +43,13 @@ PA1_template <- function() {
 		summarise(average_steps = mean(steps, na.rm=TRUE))
 
 	## plot average steps per 5-min interval in time series plot
-        png(filename="./plot2.png", width=480, height=480)
+        png(filename="./instructions_fig/plot2.png", width=480, height=480)
 	with(pa1, plot(intervalt, average_steps, type="l", xlab="5-minute Intervals", 
 			main="Average Steps Taken per 5-min Intervals"))
 	abline(v=pa1$intervalt[which(pa1$average==max(pa1$average_steps))], col="blue")
 	dev.off()
+
+	![Average Steps per 5-min Interval](instructions_fig/plot2.png) 
 
 	pa1$interval[which(pa1$average==max(pa1$average_steps))]
 	## 835
@@ -70,9 +74,11 @@ PA1_template <- function() {
 		summarise(total_steps = sum(steps))
 
 	## show total steps per day in a histogram
-	png(filename="./plot3.png", width=480, height=480)
+	png(filename="./instructions_fig/plot3.png", width=480, height=480)
 	hist(pa2$total_steps, xlab="Total Steps per Day", col="green", breaks=30)
 	dev.off()
+
+	![Total Steps per Day (with imputed missing values)](instructions_fig/plot3.png) 
 
 	## calculate and report mean and median of the total number of steps taken per day
 	mean(pa2$total_steps,na.rm=TRUE)
@@ -92,18 +98,40 @@ PA1_template <- function() {
 		}
 	}
 
+	# setup graphing panel
+        png(filename="./instructions_fig/plot4.png", width=480, height=480)
+	par(mfrow=c(2,1))
+	par(cex = 0.6)
+	par(mar = c(0, 0, 0, 0), oma = c(4, 4, 0.5, 0.5))
+
+
 	pa3 <- pa1c %>% 
-		group_by(intervalt, dayofweeks) %>%
+		filter(dayofweeks == "weekday") %>%
+		group_by(intervalt) %>%
 		summarise(average_steps = mean(steps, na.rm=TRUE))
 
 	## plot average steps per 5-min interval in time series plot
-        png(filename="./plot4.png", width=480, height=480)
-	with(pa3, plot(intervalt, average_steps, type="l", xlab="5-minute Intervals", 
-			main="Average Steps Taken per 5-min Intervals")
-	abline(v=pa3$intervalt[which(pa1$average==max(pa3$average_steps))], col="blue")
-	dev.off()
+	with(pa3, plot(intervalt, average_steps, type="l", xlab="5-minute Intervals")) 
+	title(main="Average Steps Taken per 5-min Intervals - Weekdays", line = -2)
+	abline(v=pa3$intervalt[which(pa3$average==max(pa3$average_steps))], col="blue")
 
 	pa3$interval[which(pa3$average==max(pa3$average_steps))]
 	## 835
+
+	pa4 <- pa1c %>% 
+		filter(dayofweeks == "weekend") %>%
+		group_by(intervalt) %>%
+		summarise(average_steps = mean(steps, na.rm=TRUE))
+
+	## plot average steps per 5-min interval in time series plot
+	with(pa4, plot(intervalt, average_steps, type="l", xlab="5-minute Intervals")) 
+	title(main="Average Steps Taken per 5-min Intervals - Weekends", line=-2)
+	abline(v=pa4$intervalt[which(pa4$average==max(pa4$average_steps))], col="blue")
+
+	pa4$interval[which(pa4$average==max(pa4$average_steps))]
+	## 915
+
+	dev.off()
 	
 }
+	
