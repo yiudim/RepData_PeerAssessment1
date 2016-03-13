@@ -103,12 +103,13 @@ Adjusted mean with imputed NAs is `r as.integer(mean(pa2$total_steps,na.rm=TRUE)
 
 Adjusted mediam with imputed NAs is `r median(pa2$total_steps,na.rm=TRUE)`
 
-## values are different from when we calcuated the same stats excluding the NAs in the dataset
+Values are different from when we calcuated the same stats excluding the NAs in the dataset
 
 
 
 
 # Are there differences in activity patterns between weekdays and weekends?
+
 ## create a new factor variable in the dataset with two levels - "weekday" and "weekend" 
 
 ```{r}
@@ -147,4 +148,4 @@ title(main="Average Steps Taken per 5-min Intervals - Weekends", line=-2)
 abline(v=pa4$intervalt[which(pa4$average==max(pa4$average_steps))], col="blue")
 ```
 
-## Activities in weedays and weekdends are different
+Activities in weedays and weekdends are different

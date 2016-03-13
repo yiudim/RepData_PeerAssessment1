@@ -103,12 +103,13 @@ Adjusted mean with imputed NAs is 10749
 
 Adjusted mediam with imputed NAs is 10641
 
-## values are different from when we calcuated the same stats excluding the NAs in the dataset
+Values are different from when we calcuated the same stats excluding the NAs in the dataset
 
 
 
 
 # Are there differences in activity patterns between weekdays and weekends?
+
 ## create a new factor variable in the dataset with two levels - "weekday" and "weekend" 
 
 
@@ -138,4 +139,4 @@ pa4 <- pa1c %>%
 ## Plot average steps per 5-min interval in time series plot
 ![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13-1.png)
 
-## Activities in weedays and weekdends are different
+Activities in weedays and weekdends are different
