@@ -4,8 +4,6 @@ author: "yiudim"
 output: "html_document"
 ---
 
-PA1_template <- function() {
-
 	## load necessary libraries
 	
 	```r
@@ -155,6 +153,4 @@ PA1_template <- function() {
 	## 915
 
 	dev.off()
-	
-}
 	
