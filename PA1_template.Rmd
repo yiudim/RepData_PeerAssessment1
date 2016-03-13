@@ -68,7 +68,7 @@ abline(v=pa1$intervalt[which(pa1$average==max(pa1$average_steps))], col="blue")
 Average steps per 5-min interval `r pa1$interval[which(pa1$average==max(pa1$average_steps))]`
 
 
-# IMPUTING MISSING VALUES 
+# Imputing missing values 
 ## Calculate and report the total number of missing values in the dataset
 How many NAs are there in the dataset (activities.csv) `r sum(is.na(pa1raw))`
 
@@ -96,7 +96,7 @@ hist(pa2$total_steps, xlab="Total Steps per Day", col="green", breaks=30)
 
 ## calculate and report mean and median of the total number of steps taken per day
 ```{r}
-Adjusted mean with imputed NAs is `r as.integer(mean(pa2$total_steps,na.rm=TRUE))`
+Adjusted mean with imputed NAs is `r as.integer(mean(pa2$total_steps,na.rm=TRUE))
 Adjusted mediam with imputed NAs is `r median(pa2$total_steps,na.rm=TRUE)`
 ```
 

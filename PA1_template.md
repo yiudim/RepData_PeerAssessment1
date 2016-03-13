@@ -68,7 +68,7 @@ summarise(average_steps = mean(steps, na.rm=TRUE))
 Average steps per 5-min interval 2016-03-14 08:35:00
 
 
-# IMPUTING MISSING VALUES 
+# Imputing missing values 
 ## Calculate and report the total number of missing values in the dataset
 How many NAs are there in the dataset (activities.csv) 2304
 
