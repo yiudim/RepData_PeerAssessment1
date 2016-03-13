@@ -7,21 +7,24 @@ output: "html_document"
 PA1_template <- function() {
 
 	## load necessary libraries
-	```{r}
+	
+	```r
 	require(dplyr)
 	require(ggplot2)
 	require(Hmisc)
 	```
 	
 	## read the data file
-	```{r}
+	
+	```r
 	fileurl <- "./activity.csv"
 	pa1raw <- read.csv(fileurl)
 	```
 
 	## raw data pre-process -> make "date" into Date format
-	```{r}
-        pa1raw <- pa1raw %>% 
+	
+	```r
+	        pa1raw <- pa1raw %>% 
 		mutate(fdate = as.Date(date, format("%Y-%m-%d"))) %>% 
 		mutate(intervalt = as.POSIXct(formatC(interval, width=4, flag="0"),format="%H%M")) %>%
 		select(-date)
@@ -30,27 +33,35 @@ PA1_template <- function() {
 
 	## -------- WHAT IS THE MEAN TOTAL OF STEPS TAKEN PER DAY? ---------
 	## calcuate total steps per day
-	```{r}
-        pa1 <- pa1raw %>% 
+	
+	```r
+	        pa1 <- pa1raw %>% 
 		group_by(fdate) %>%
 		summarise(total_steps = sum(steps))
 	```
 
 	## show total steps per day in a histogram
-	```{r}
+	
+	```r
 	png(filename="./instructions_fig/plot1.png", width=480, height=480)
 	hist(pa1$total_steps, xlab="Total Steps per Day", col="green", breaks=30)
 	dev.off()
 	```
+	
+	```
+	## quartz_off_screen 
+	##                 2
+	```
 
 	## calculate and report mean and median of the total number of steps taken per day
-	```{r}
+	
+	```r
 	meanvalue <- mean(pa1$total_steps,na.rm=TRUE)
 	medianvalue <- median(pa1$total_steps,na.rm=TRUE)
 	```
 
-	##mean is `r meanvalue`
-	median is `r medianvalue`
+	##mean is 1.0766189 &times; 10<sup>4</sup>
+	median is 10765
 
 	## -------- WHAT IS THE DAILY AVERAGE ACTIVITY PATTERN? -----------
 	## calcuate average steps per 5-minute interval
