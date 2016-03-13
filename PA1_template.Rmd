@@ -40,15 +40,14 @@ summarise(total_steps = sum(steps))
 hist(pa1$total_steps, xlab="Total Steps per Day", col="green", breaks=30)
 ```
 
-## calculate and report mean and median of the total number of steps taken per day
 ```{r}
 meanvalue <- as.integer(mean(pa1$total_steps,na.rm=TRUE))
 medianvalue <- median(pa1$total_steps,na.rm=TRUE)
 ```
 
-Mean is `r meanvalue`
+Mean of the total number of steps take per day is `r meanvalue`
 
-Median is `r medianvalue`
+Median of the total number of steps take per day is `r medianvalue`
 
 
 # What is the daily average activity pattern?
@@ -65,12 +64,17 @@ with(pa1, plot(intervalt, average_steps, type="l", xlab="5-minute Intervals",
 main="Average Steps Taken per 5-min Intervals"))
 abline(v=pa1$intervalt[which(pa1$average==max(pa1$average_steps))], col="blue")
 ```
+
 Average steps per 5-min interval `r pa1$interval[which(pa1$average==max(pa1$average_steps))]`
+
+
 
 
 # Imputing missing values 
 ## Calculate and report the total number of missing values in the dataset
-How many NAs are there in the dataset (activities.csv) `r sum(is.na(pa1raw))`
+
+Number of NAs in the dataset (activities.csv) - `r sum(is.na(pa1raw))`
+
 
 ## Assign average value of interval if step is NA
 ```{r}
@@ -78,6 +82,7 @@ pa1c <- pa1raw
 for(i in 1:nrow(pa1c)) {
 if(is.na(pa1c$steps[i])) {
 pa1c$steps[i] <- as.integer(pa1$average_steps[which(pa1$intervalt == pa1c$intervalt[i])])
+
 }
 }
 ```
@@ -94,36 +99,42 @@ summarise(total_steps = sum(steps))
 hist(pa2$total_steps, xlab="Total Steps per Day", col="green", breaks=30)
 ```
 
-## calculate and report mean and median of the total number of steps taken per day
 Adjusted mean with imputed NAs is `r as.integer(mean(pa2$total_steps,na.rm=TRUE))`
+
 Adjusted mediam with imputed NAs is `r median(pa2$total_steps,na.rm=TRUE)`
 
 ## values are different from when we calcuated the same stats excluding the NAs in the dataset
 
+
+
+
 # Are there differences in activity patterns between weekdays and weekends?
-## create a new factor variable in the dataset with two levels - "weekday" and "weekend" indicating whether a given date is a weekday or weekend day.
+## create a new factor variable in the dataset with two levels - "weekday" and "weekend" 
+
 ```{r}
 for(i in 1:nrow(pa1c)) {
-dofw <- weekdays(pa1c$fdate[i]) 
-if(dofw %in% c("Saturday","Sunday")){
-pa1c$dayofweeks[i] <- "weekend"
-} else {
-pa1c$dayofweeks[i] <- "weekday"
-}
+	dofw <- weekdays(pa1c$fdate[i]) 
+	if(dofw %in% c("Saturday","Sunday")){
+		pa1c$dayofweeks[i] <- "weekend"
+	} else {
+		pa1c$dayofweeks[i] <- "weekday"
+	}
 }
 
 pa3 <- pa1c %>% 
-filter(dayofweeks == "weekday") %>%
-group_by(intervalt) %>%
-summarise(average_steps = mean(steps, na.rm=TRUE))
+	filter(dayofweeks == "weekday") %>%
+	group_by(intervalt) %>%
+	summarise(average_steps = mean(steps, na.rm=TRUE))
 
 pa4 <- pa1c %>% 
-filter(dayofweeks == "weekend") %>%
-group_by(intervalt) %>%
-summarise(average_steps = mean(steps, na.rm=TRUE))
+	filter(dayofweeks == "weekend") %>%
+	group_by(intervalt) %>%
+	summarise(average_steps = mean(steps, na.rm=TRUE))
 ```
 
-## plot average steps per 5-min interval in time series plot
+
+
+## Plot average steps per 5-min interval in time series plot
 ```{r echo=FALSE}
 par(mfrow=c(2,1))
 par(cex = 0.6)
@@ -135,3 +146,5 @@ with(pa4, plot(intervalt, average_steps, type="l", xlab="5-minute Intervals"))
 title(main="Average Steps Taken per 5-min Intervals - Weekends", line=-2)
 abline(v=pa4$intervalt[which(pa4$average==max(pa4$average_steps))], col="blue")
 ```
+
+## Activities in weedays and weekdends are different
