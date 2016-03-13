@@ -100,7 +100,8 @@ Adjusted mediam with imputed NAs is `r median(pa2$total_steps,na.rm=TRUE)`
 
 ## values are different from when we calcuated the same stats excluding the NAs in the dataset
 
-# Activity patterns weekday vs weekend
+# Are there differences in activity patterns between weekdays and weekends?
+## create a new factor variable in the dataset with two levels - "weekday" and "weekend" indicating whether a given date is a weekday or weekend day.
 ```{r}
 for(i in 1:nrow(pa1c)) {
 dofw <- weekdays(pa1c$fdate[i]) 
@@ -110,45 +111,27 @@ pa1c$dayofweeks[i] <- "weekend"
 pa1c$dayofweeks[i] <- "weekday"
 }
 }
-```
 
-## setup graphing panel
-```{r echo=FALSE}
-	par(mfrow=c(2,1))
-	par(cex = 0.6)
-	par(mar = c(0, 0, 0, 0), oma = c(4, 4, 0.5, 0.5))
-```
-
-```{r}
 pa3 <- pa1c %>% 
 filter(dayofweeks == "weekday") %>%
 group_by(intervalt) %>%
 summarise(average_steps = mean(steps, na.rm=TRUE))
-```
 
-## plot average steps per 5-min interval in time series plot
-```{r echo=FALSE}
-with(pa3, plot(intervalt, average_steps, type="l", xlab="5-minute Intervals")) 
-title(main="Average Steps Taken per 5-min Intervals - Weekdays", line = -2)
-abline(v=pa3$intervalt[which(pa3$average==max(pa3$average_steps))], col="blue")
-```
-
-5-min internal with max average number of steps (with imputed NAs) `r pa3$interval[which(pa3$average==max(pa3$average_steps))]`
-
-## Remain Unchanged (with and without imputing NAs with average values
-```{r}
 pa4 <- pa1c %>% 
 filter(dayofweeks == "weekend") %>%
 group_by(intervalt) %>%
 summarise(average_steps = mean(steps, na.rm=TRUE))
 ```
 
-## Are there differences in activity patterns between weekdays and weekends?
+## plot average steps per 5-min interval in time series plot
 ```{r echo=FALSE}
+par(mfrow=c(2,1))
+par(cex = 0.6)
+par(mar = c(0, 0, 0, 0), oma = c(4, 4, 0.5, 0.5))
+with(pa3, plot(intervalt, average_steps, type="l", xlab="5-minute Intervals")) 
+title(main="Average Steps Taken per 5-min Intervals - Weekdays", line = -2)
+abline(v=pa3$intervalt[which(pa3$average==max(pa3$average_steps))], col="blue")
 with(pa4, plot(intervalt, average_steps, type="l", xlab="5-minute Intervals")) 
 title(main="Average Steps Taken per 5-min Intervals - Weekends", line=-2)
 abline(v=pa4$intervalt[which(pa4$average==max(pa4$average_steps))], col="blue")
 ```
-
-pa4$interval[which(pa4$average==max(pa4$average_steps))]
-## 915

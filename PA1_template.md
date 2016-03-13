@@ -100,7 +100,8 @@ Adjusted mediam with imputed NAs is 10641
 
 ## values are different from when we calcuated the same stats excluding the NAs in the dataset
 
-# Activity patterns weekday vs weekend
+# Are there differences in activity patterns between weekdays and weekends?
+## create a new factor variable in the dataset with two levels - "weekday" and "weekend" indicating whether a given date is a weekday or weekend day.
 
 ```r
 for(i in 1:nrow(pa1c)) {
@@ -111,35 +112,17 @@ pa1c$dayofweeks[i] <- "weekend"
 pa1c$dayofweeks[i] <- "weekday"
 }
 }
-```
 
-## setup graphing panel
-
-
-
-```r
 pa3 <- pa1c %>% 
 filter(dayofweeks == "weekday") %>%
 group_by(intervalt) %>%
 summarise(average_steps = mean(steps, na.rm=TRUE))
-```
 
-## plot average steps per 5-min interval in time series plot
-![plot of chunk unnamed-chunk-15](figure/unnamed-chunk-15-1.png)
-
-5-min internal with max average number of steps (with imputed NAs) 2016-03-14 08:35:00
-
-## Remain Unchanged (with and without imputing NAs with average values
-
-```r
 pa4 <- pa1c %>% 
 filter(dayofweeks == "weekend") %>%
 group_by(intervalt) %>%
 summarise(average_steps = mean(steps, na.rm=TRUE))
 ```
 
-## Are there differences in activity patterns between weekdays and weekends?
-![plot of chunk unnamed-chunk-17](figure/unnamed-chunk-17-1.png)
-
-pa4$interval[which(pa4$average==max(pa4$average_steps))]
-## 915
+## plot average steps per 5-min interval in time series plot
+![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13-1.png)
