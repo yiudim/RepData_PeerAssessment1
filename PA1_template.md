@@ -4,6 +4,7 @@ author: "yiudim"
 output: "html_document"
 ---
 
+# Necessary work to get the data in...
 ## load necessary libraries
 
 ```r
@@ -39,17 +40,7 @@ summarise(total_steps = sum(steps))
 ```
 
 ## show total steps per day in a histogram
-
-```r
-png(filename="./instructions_fig/plot1.png", width=480, height=480)
-hist(pa1$total_steps, xlab="Total Steps per Day", col="green", breaks=30)
-dev.off()
-```
-
-```
-## quartz_off_screen 
-##                 2
-```
+![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png)
 
 ## calculate and report mean and median of the total number of steps taken per day
 
@@ -62,7 +53,8 @@ Mean is 10766
 
 Median is 10765
 
-## What is the daily average activity pattern?
+
+# What is the daily average activity pattern?
 ## calcuate average steps per 5-minute interval
 
 ```r
@@ -74,15 +66,15 @@ summarise(average_steps = mean(steps, na.rm=TRUE))
 ## plot average steps per 5-min interval in time series plot
 
 ```r
-png(filename="./instructions_fig/plot2.png", width=480, height=480)
 with(pa1, plot(intervalt, average_steps, type="l", xlab="5-minute Intervals", 
 main="Average Steps Taken per 5-min Intervals"))
 abline(v=pa1$intervalt[which(pa1$average==max(pa1$average_steps))], col="blue")
 ```
 
-	pa1$interval[which(pa1$average==max(pa1$average_steps))]
-	## 835
+![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8-1.png)
+Average steps per 5-min interval `pa1$interval[which(pa1$average==max(pa1$average_steps))]`
 
+### 835
 
 	## --------  IMPUTING MISSING VALUES -----------
 	## Calculate and report the total number of missing values in the dataset
