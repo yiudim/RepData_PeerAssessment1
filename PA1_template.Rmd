@@ -95,13 +95,10 @@ hist(pa2$total_steps, xlab="Total Steps per Day", col="green", breaks=30)
 ```
 
 ## calculate and report mean and median of the total number of steps taken per day
-```{r}
-Adjusted mean with imputed NAs is `r as.integer(mean(pa2$total_steps,na.rm=TRUE))
+Adjusted mean with imputed NAs is `r as.integer(mean(pa2$total_steps,na.rm=TRUE))`
 Adjusted mediam with imputed NAs is `r median(pa2$total_steps,na.rm=TRUE)`
-```
 
 ## values are different from when we calcuated the same stats excluding the NAs in the dataset
-
 
 # Activity patterns weekday vs weekend
 ```{r}
