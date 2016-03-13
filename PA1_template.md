@@ -29,7 +29,7 @@ select(-date)
 ```
 		
 
-## -------- WHAT IS THE MEAN TOTAL OF STEPS TAKEN PER DAY? ---------
+# What is the mean total of steps taken per day?
 ## calcuate total steps per day
 
 ```r
@@ -54,25 +54,31 @@ dev.off()
 ## calculate and report mean and median of the total number of steps taken per day
 
 ```r
-meanvalue <- mean(pa1$total_steps,na.rm=TRUE)
+meanvalue <- as.integer(mean(pa1$total_steps,na.rm=TRUE))
 medianvalue <- median(pa1$total_steps,na.rm=TRUE)
 ```
 
-mean is 1.0766189 &times; 10<sup>4</sup>
-median is 10765
+Mean is 10766
 
-	## -------- WHAT IS THE DAILY AVERAGE ACTIVITY PATTERN? -----------
-	## calcuate average steps per 5-minute interval
-        pa1 <- pa1raw %>% 
-		group_by(intervalt) %>%
-		summarise(average_steps = mean(steps, na.rm=TRUE))
+Median is 10765
 
-	## plot average steps per 5-min interval in time series plot
-        png(filename="./instructions_fig/plot2.png", width=480, height=480)
-	with(pa1, plot(intervalt, average_steps, type="l", xlab="5-minute Intervals", 
-			main="Average Steps Taken per 5-min Intervals"))
-	abline(v=pa1$intervalt[which(pa1$average==max(pa1$average_steps))], col="blue")
-	dev.off()
+## What is the daily average activity pattern?
+## calcuate average steps per 5-minute interval
+
+```r
+pa1 <- pa1raw %>% 
+group_by(intervalt) %>%
+summarise(average_steps = mean(steps, na.rm=TRUE))
+```
+
+## plot average steps per 5-min interval in time series plot
+
+```r
+png(filename="./instructions_fig/plot2.png", width=480, height=480)
+with(pa1, plot(intervalt, average_steps, type="l", xlab="5-minute Intervals", 
+main="Average Steps Taken per 5-min Intervals"))
+abline(v=pa1$intervalt[which(pa1$average==max(pa1$average_steps))], col="blue")
+```
 
 	pa1$interval[which(pa1$average==max(pa1$average_steps))]
 	## 835
