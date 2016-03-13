@@ -64,91 +64,48 @@ summarise(average_steps = mean(steps, na.rm=TRUE))
 ```
 
 ## plot average steps per 5-min interval in time series plot
+![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8-1.png)
+Average steps per 5-min interval 2016-03-14 08:35:00
+
+
+# IMPUTING MISSING VALUES 
+## Calculate and report the total number of missing values in the dataset
+How many NAs are there in the dataset (activities.csv) 2304
+
+## Assign average value of interval if step is NA
 
 ```r
-with(pa1, plot(intervalt, average_steps, type="l", xlab="5-minute Intervals", 
-main="Average Steps Taken per 5-min Intervals"))
-abline(v=pa1$intervalt[which(pa1$average==max(pa1$average_steps))], col="blue")
+pa1c <- pa1raw
+for(i in 1:nrow(pa1c)) {
+if(is.na(pa1c$steps[i])) {
+pa1c$steps[i] <- as.integer(pa1$average_steps[which(pa1$intervalt == pa1c$intervalt[i])])
+}
+}
 ```
 
-![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8-1.png)
-Average steps per 5-min interval `pa1$interval[which(pa1$average==max(pa1$average_steps))]`
+## Re-look at total, mean, and median values
 
-### 835
+```r
+pa2 <- pa1c %>% 
+group_by(fdate) %>%
+summarise(total_steps = sum(steps))
+```
 
-	## --------  IMPUTING MISSING VALUES -----------
-	## Calculate and report the total number of missing values in the dataset
-	sum(is.na(pa1raw))
-	## There is a total of 2304 NAs in the given dataset (activities.csv)
+## show total steps per day in a histogram
+![plot of chunk unnamed-chunk-11](figure/unnamed-chunk-11-1.png)
 
-	## Assign average value of interval if step is NA
-	pa1c <- pa1raw
-	for(i in 1:nrow(pa1c)) {
-		if(is.na(pa1c$steps[i])) {
-			pa1c$steps[i] <- as.integer(pa1$average_steps[which(pa1$intervalt == pa1c$intervalt[i])])
-		}
-	}
-
-	## Re-look at total, mean, and median values
-        pa2 <- pa1c %>% 
-		group_by(fdate) %>%
-		summarise(total_steps = sum(steps))
-
-	## show total steps per day in a histogram
-	png(filename="./instructions_fig/plot3.png", width=480, height=480)
-	hist(pa2$total_steps, xlab="Total Steps per Day", col="green", breaks=30)
-	dev.off()
-
-	## calculate and report mean and median of the total number of steps taken per day
-	mean(pa2$total_steps,na.rm=TRUE)
-	## mean is 10749.77
-	median(pa2$total_steps,na.rm=TRUE)
-	## median is 10641
-	## values are different from when we calcuated the same stats excluding the NAs in the dataset
+## calculate and report mean and median of the total number of steps taken per day
 
 
-	## --------  ACTIVITY PATTERNS WEEKDAY vs WEEKEND -----------
-	for(i in 1:nrow(pa1c)) {
-		dofw <- weekdays(pa1c$fdate[i]) 
-		if(dofw %in% c("Saturday","Sunday")){
-			pa1c$dayofweeks[i] <- "weekend"
-		} else {
-			pa1c$dayofweeks[i] <- "weekday"
-		}
-	}
-
-	# setup graphing panel
-        png(filename="./instructions_fig/plot4.png", width=480, height=480)
-	par(mfrow=c(2,1))
-	par(cex = 0.6)
-	par(mar = c(0, 0, 0, 0), oma = c(4, 4, 0.5, 0.5))
 
 
-	pa3 <- pa1c %>% 
-		filter(dayofweeks == "weekday") %>%
-		group_by(intervalt) %>%
-		summarise(average_steps = mean(steps, na.rm=TRUE))
 
-	## plot average steps per 5-min interval in time series plot
-	with(pa3, plot(intervalt, average_steps, type="l", xlab="5-minute Intervals")) 
-	title(main="Average Steps Taken per 5-min Intervals - Weekdays", line = -2)
-	abline(v=pa3$intervalt[which(pa3$average==max(pa3$average_steps))], col="blue")
 
-	pa3$interval[which(pa3$average==max(pa3$average_steps))]
-	## 835
 
-	pa4 <- pa1c %>% 
-		filter(dayofweeks == "weekend") %>%
-		group_by(intervalt) %>%
-		summarise(average_steps = mean(steps, na.rm=TRUE))
 
-	## plot average steps per 5-min interval in time series plot
-	with(pa4, plot(intervalt, average_steps, type="l", xlab="5-minute Intervals")) 
-	title(main="Average Steps Taken per 5-min Intervals - Weekends", line=-2)
-	abline(v=pa4$intervalt[which(pa4$average==max(pa4$average_steps))], col="blue")
 
-	pa4$interval[which(pa4$average==max(pa4$average_steps))]
-	## 915
 
-	dev.off()
-	
+
+
+
+
